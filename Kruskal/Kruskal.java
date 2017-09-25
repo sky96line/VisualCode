@@ -82,7 +82,7 @@ class Kruskal
           min = j;
       }
       
-      flag = ckack(e[min].getNode0(), e[min].getNode0(), closeSet);
+      flag = chack(e[min].getNode0(), e[min].getNode0(), closeSet);
       
       System.out.println(e[min].getDist());
       if(flag){}
