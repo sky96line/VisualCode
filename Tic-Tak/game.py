@@ -61,6 +61,7 @@ class game:
 
 x = raw_input("Player 1 : ")
 y = raw_input("player 2 : ")
+i=0
 a = game(x, y)
 while i in range(9):
   a.mark()
