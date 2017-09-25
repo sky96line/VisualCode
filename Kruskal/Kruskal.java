@@ -48,6 +48,28 @@ class Kruskal
   public static int numEdge=0;
   public static Scanner sc = new Scanner(System.in);
   
+  static boolean chack(int x, int y, int[] arr)
+  {
+    boolean flag1, flag2;
+    for(int i=0; i<arr.length; i++)
+    {
+      if(x==arr[i])
+      {
+        flag1 = true;
+        break;
+      }
+    }
+    for(int i=0; i<arr.length; i++)
+    {
+      if(y==arr[i])
+      {
+        flag2 = true;
+        break;
+      }
+    }
+    return (flag1||flag2);
+  }
+
   static int[] done()
   {
     boolean flag;
@@ -60,25 +82,15 @@ class Kruskal
           min = j;
       }
       
-      flag = false;
-      for(int m=0; m<c; m++)  {
-        
-        if(e[min].getNode0()==closeSet[m])  {
-          for(int n=0; n<c; n++)  {
-            if(e[min].getNode1()==closeSet[n])    {
-              flag = true;
-              break;
-            }
-          }
-        }
-      }
+      flag = ckack(e[min].getNode0(), e[min].getNode0(), closeSet);
+      
       System.out.println(e[min].getDist());
       if(flag){}
       else  {
         closeSet[c++]=e[min].getNode0();
         closeSet[c++]=e[min].getNode1();
         total += e[min].getDist();
-        e[min].setDist(0);
+        e[min].setDist(10000);
       }
     }
     System.out.println(total);
