@@ -56,26 +56,23 @@ class Kruskal
       if(x==closeSet[i])
       {
         flag1 = true;
-        break;
+      }
+      if(y==closeSet[i])
+      {
+        flag2 = true;
       }
     }
     if(!flag1)
     {
       closeSet[c++]=x;
     }
-    for(int i=0; i<size; i++)
-    {
-      if(y==closeSet[i])
-      {
-        flag2 = true;
-        break;
-      }
-    }
     if(!flag2)
     {
       closeSet[c++]=y;
     }
-    return (flag1 && flag2);
+    if(flag1 && flag2)
+      return false;
+    return true;
   }
 
   static int minIndex()
@@ -96,10 +93,12 @@ class Kruskal
   static void done()
   {
     boolean flag;
-    int total=0,i=1,min;
+    int total=0,i=0,min;
     
-    while(i<size)
+    while(i<size-1)
     {
+      try{Thread.sleep(1000);} catch(Exception e){}
+      
       min = minIndex();
       flag = check(e[min].getNode0(), e[min].getNode0());  
       if(!flag)
@@ -121,6 +120,8 @@ class Kruskal
       {
         System.out.print(i+" to "+j+" : ");
         int dist = sc.nextInt();
+        if(dist==0)
+          dist = 10000;
         matrix[i][j] = dist;
         matrix[j][i] = dist;
         if(dist>0)
@@ -170,6 +171,6 @@ class Kruskal
     matrix = new int[size][size];
     fill();
     done();
-    //display(arr);
+    display(closeSet);
   }
 }
