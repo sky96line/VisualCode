@@ -44,57 +44,73 @@ class Kruskal
 {
   public static int size;
   public static int[][] matrix;
+  public static int[] closeSet;
   public static Edge[] e;
+  public static int c=0;
   public static int numEdge=0;
   public static Scanner sc = new Scanner(System.in);
   
-  static boolean chack(int x, int y, int[] arr)
+  static boolean check(int x, int y)
   {
-    boolean flag1, flag2;
-    for(int i=0; i<arr.length; i++)
+    boolean flag1=false, flag2=false;
+    for(int i=0; i<size; i++)
     {
-      if(x==arr[i])
+      if(x==closeSet[i])
       {
         flag1 = true;
         break;
       }
     }
-    for(int i=0; i<arr.length; i++)
+    if(!flag)
     {
-      if(y==arr[i])
+      closeSet[c++]=x;
+    }
+    for(int i=0; i<size; i++)
+    {
+      if(y==closeSet[i])
       {
         flag2 = true;
         break;
       }
     }
-    return (flag1||flag2);
+    if(!flag)
+    {
+      closeSet[c++]=y;
+    }
+    return (flag1 && flag2);
   }
 
-  static int[] done()
+  static int minIndex()
   {
-    boolean flag;
-    int c=0,total=0;
-    int[] closeSet = new int[size*2];
-    for(int i=0; i<size; i++) {
+    for(int i=0; i<size; i++) 
+    {
       int min = 0;
-      for(int j=0; j<numEdge; j++)  {
-        if(e[min].getDist()>e[j].getDist() && e[j].getDist()!=0)
+      for(int j=0; j<size; j++)  
+      {
+        if(e[min].getDist()>e[j].getDist())
           min = j;
       }
-      
-      flag = chack(e[min].getNode0(), e[min].getNode0(), closeSet);
-      
-      System.out.println(e[min].getDist());
-      if(flag){}
-      else  {
-        closeSet[c++]=e[min].getNode0();
-        closeSet[c++]=e[min].getNode1();
+    }
+    return min;
+  }
+
+  static void done()
+  {
+    boolean flag;
+    int total=0,i=1;
+    
+    while(i<size)
+    {
+      min = minIndex();
+      flag = check(e[min].getNode0(), e[min].getNode0());  
+      if(!flag)
+      {
         total += e[min].getDist();
-        e[min].setDist(10000);
+        i++;
       }
+      e[min].setDist(10000);
     }
     System.out.println(total);
-    return closeSet;
   }
   
   static void fill()
@@ -151,6 +167,7 @@ class Kruskal
     System.out.print("How many node are there : ");
     size = sc.nextInt();
     e = new Edge[14];
+    closeSet = new int[size];
     matrix = new int[size][size];
     fill();
     int[] arr = done();
