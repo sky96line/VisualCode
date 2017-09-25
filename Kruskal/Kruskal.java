@@ -1,5 +1,3 @@
-package demo;
-
 import java.util.*;
 
 class Edge
@@ -61,7 +59,7 @@ class Kruskal
         break;
       }
     }
-    if(!flag)
+    if(!flag1)
     {
       closeSet[c++]=x;
     }
@@ -73,7 +71,7 @@ class Kruskal
         break;
       }
     }
-    if(!flag)
+    if(!flag2)
     {
       closeSet[c++]=y;
     }
@@ -82,9 +80,10 @@ class Kruskal
 
   static int minIndex()
   {
+    int min=0;
     for(int i=0; i<size; i++) 
     {
-      int min = 0;
+      min = 0;
       for(int j=0; j<size; j++)  
       {
         if(e[min].getDist()>e[j].getDist())
@@ -97,7 +96,7 @@ class Kruskal
   static void done()
   {
     boolean flag;
-    int total=0,i=1;
+    int total=0,i=1,min;
     
     while(i<size)
     {
@@ -170,7 +169,7 @@ class Kruskal
     closeSet = new int[size];
     matrix = new int[size][size];
     fill();
-    int[] arr = done();
+    done();
     //display(arr);
   }
 }
