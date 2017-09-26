@@ -48,13 +48,13 @@ class newKruskal
 
   public static void fill()
   {
+    int dist=0;
     for(int i=0; i<size; i++)
     {
       for(int j=i+1; j<size; j++)
       {
-        int dist = value[valueI++];
-        System.out.println(i+" to "+j+" : "+dist);
-        //int dist = sc.nextInt();
+        System.out.println(i+" to "+j+" : ");
+        dist = sc.nextInt();
         if(dist>0)
         {
           e[numEdge++] = new Edge(i,j,dist);       
@@ -161,7 +161,7 @@ class newKruskal
     int s = sc.nextInt();
     closeSet = new int[size];
     matrix = new int[size][size];
-    e = new Edge[s];
+    e = new Edge[100];
     closeSet = new int[size];
     fill();
     sort();
