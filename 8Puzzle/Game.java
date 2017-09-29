@@ -57,6 +57,7 @@ class Node
     }
     return prob;
   }
+  
   int huristic(int[][] temp) {
     int prob=0;
     int[] index = new int[2];
@@ -216,6 +217,20 @@ class Game
     //int[][] arr = new int[][] {{1,2,3},{4,5,6},{7,8,0}};
     n = new Node(arr);
     n.display();
-    System.out.println(n.huristic());
+    while(goal!=n.bord)
+    {
+      try{Thread.sleep(1000);}
+      catch(Exception e){}
+      
+      n.moveUp();
+      n.moveDown();
+      n.moveLeft();
+      n.moveRight();
+      n.check();
+      System.out.println("========");
+      n.display();
+      System.out.println(n.huristic());
+      System.out.println("========");
+    }
   }
 }
