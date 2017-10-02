@@ -1,8 +1,11 @@
+package demo;
 
 class Node
 {
   int[][] bord = new int[3][3];
   int up=0,down=0,left=0,right=0;
+  int[][][] close = new int[100][3][3];
+  int num = 0;
 
   Node(int[][] arr) {
     this.bord = arr;
@@ -104,9 +107,10 @@ class Node
 
   int max(int a, int b, int c, int d)
   {
-    if(a>b && a>c && a>d) { return a; }
-    else if(b>c && b>d) { return b; }
-    else if(c>d) { return c; }
+    System.out.println(a+" "+b+" "+c+" "+d);
+    if(a<b && a<c && a<d) { return a; }
+    else if(b<c && b<d) { return b; }
+    else if(c<d) { return c; }
     else { return d; }
   }
 
@@ -138,6 +142,7 @@ class Node
       bord[index[0]][index[1]] = bord[index[0]][index[1]+1];
       bord[index[0]][index[1]+1] = temp;
     }
+    close[num] = bord;
   }
 
   void check()
@@ -153,11 +158,21 @@ class Node
   {
     int[][] temp = bord;
     int[] index = indexOf(0);
-    up=0;
+    boolean flag = true;
+    up=1000;
+
     if(index[0]!=0)
     {
       temp = swap(temp,index[0],index[1],"UP");
-      up = huristic(temp);
+      for(int i=0; i<Game.in; i++)
+      {
+        if(close[i] == temp)
+        {
+          flag = false;
+        }
+      }
+      if(flag)
+        up = huristic(temp);
     }
   }
 
@@ -165,11 +180,20 @@ class Node
   {
     int[][] temp = bord;
     int[] index = indexOf(0);
-    down=0;
+    boolean flag = true;
+    down=1000;
     if(index[0]!=2)
     {
       temp = swap(temp,index[0],index[1],"DOWN");
-      down = huristic(temp);
+      for(int i=0; i<Game.in; i++)
+      {
+        if(close[i] == temp)
+        {
+          flag = false;
+        }
+      }
+      if(flag)
+        down = huristic(temp);
     }
   }
 
@@ -177,11 +201,20 @@ class Node
   {
     int[][] temp = bord;
     int[] index = indexOf(0);
-    left=0;
+    boolean flag = true;
+    left=1000;
     if(index[1]!=0)
     {
       temp = swap(temp,index[0],index[1],"LEFT");
-      left = huristic(temp);
+      for(int i=0; i<Game.in; i++)
+      {
+        if(close[i] == temp)
+        {
+          flag = false;
+        }
+      }
+      if(flag)
+        left = huristic(temp);
     }
   }
 
@@ -189,11 +222,20 @@ class Node
   {
     int[][] temp = bord;
     int[] index = indexOf(0);
-    right=0;
+    boolean flag = true;
+    right=1000;
     if(index[1]!=2)
     {
       temp = swap(temp,index[0],index[1],"RIGHT");
-      right = huristic(temp);
+      for(int i=0; i<Game.in; i++)
+      {
+        if(close[i] == temp)
+        {
+          flag = false;
+        }
+      }
+      if(flag)
+          right = huristic(temp);
     }
   }
 
@@ -211,6 +253,9 @@ class Game
 {
   public static int[][] goal = new int[][] {{1,2,3},{8,0,4},{7,6,5}};
   static Node n;
+  public static int[] chk = new int[100];
+  public static int in = 0;
+
   public static void main(String args[])
   {
     int[][] arr = new int[][] {{1,2,3},{4,8,0},{7,6,5}};
