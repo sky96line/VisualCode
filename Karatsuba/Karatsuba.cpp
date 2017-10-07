@@ -1,9 +1,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <math.h>
-#define base 1000
+#define base 100
 
 using namespace std;
+
 
 int front(int x)
 {
@@ -15,38 +16,36 @@ int back(int y)
   return y % base;
 }
 
-int smallMul(int x, int y)
+int karatsuba(int x, int y)
 {
-  return x * y;
-}
+  if(x<base || y<base)
+    return x * y;
 
-int action(int x, int y, int z)
-{
-  return (x * pow(base, 2)) + (y * base) + z;
+  int a = front(x);
+  int b = back(x);
+  int c = front(y);
+  int d = back(y);
+
+  int z0 = karatsuba(b, d);
+  int z2 = karatsuba(a, c);
+  int z1 = karatsuba((a + b), (c + d)) - z0 - z2;
+
+  return (z2 * pow(base, 2)) + (z1 * base) + z0;
 }
 
 int main(void)
 {
-  int result, z0, z1, z2, x, y, a, b, c, d;
+  int result=0, z0, z1, z2, x, y, a, b, c, d;
 
   cout << "Enter first number : ";
   cin >> x;
   cout << "Enter second number : ";
   cin >> y;
 
-  a = front(x);
-  b = back(x);
-  c = front(y);
-  d = back(y);
-
-  z0 = smallMul(b, d);
-  z2 = smallMul(a, c);
-  z1 = smallMul((a + b), (c + d)) - z0 - z2;
-
-  result = action(z2, z1, z0);
-
-  cout << endl
-       << "Result is : " << result;
+  result = karatsuba(x, y);
+  cout
+      << endl
+      << "Result is : " << result;
 
   return 0;
 }

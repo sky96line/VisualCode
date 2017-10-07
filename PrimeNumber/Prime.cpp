@@ -3,8 +3,7 @@
 
 using namespace std;
 
-int pow(int x, int n)
-{
+int pow(int x, int n) {
   if (n == 0)
     return 1;
   y = pow(x, n / 2);
@@ -12,18 +11,15 @@ int pow(int x, int n)
   else return x * y * y;
 }
 
-float SqrRoot(float no)
-{
+float SqrRoot(float no) {
   float left, right, mid;
   left = 0;
   right = no;
 
-  while ((right - left) > SCALE)
-  {
+  while ((right - left) > SCALE) {
     mid = (right + left) / 2;
     if ((mid * mid) == no)
       return mid;
-    cout << "ew";
     if ((mid * mid) > no)
       right = mid;
     else
@@ -42,26 +38,27 @@ int mul(int num1, int num2)
 
 void primes(int num)
 {
-  int total, j, i, m, k, array[num];
+  int total, j, i, m, k;
+  bool array[num];
   for (i = 0; i < num; i++)
   {
-    array[i] = 1;
+    array[i] = false;
   }
 
   for (i = 2; (i * i) < num; i++)
   {
-    if (array[i] == 1)
+    if (!array[i])
     {
       for (j = 2; j <= num / i; j++)
       {
-        array[(i * j)] = 0;
+        array[(i * j)] = true;
       }
     }
   }
 
   for (i = 2; i < num; i++)
   {
-    if (array[i] == 1)
+    if (array[i])
       cout << i << " ";
   }
 }
