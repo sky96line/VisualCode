@@ -6,8 +6,8 @@ using namespace std;
 int pow(int x, int n) {
   if (n == 0)
     return 1;
-  y = pow(x, n / 2);
-  else if (n % 2 == 0) return y * y;
+  int y = pow(x, n / 2);
+  if (n % 2 == 0) return y * y;
   else return x * y * y;
 }
 
@@ -28,29 +28,23 @@ float SqrRoot(float no) {
   return mid;
 }
 
-int mul(int num1, int num2)
-{
+int mul(int num1, int num2) {
   int sum = 0;
   for (int i = num2; i > 0; i--)
     sum += num1;
   return sum;
 }
 
-void primes(int num)
-{
-  int total, j, i, m, k;
+void primes(int num) {
+  int total, j, i;
   bool array[num];
-  for (i = 0; i < num; i++)
-  {
+  for (i = 0; i < num; i++) {
     array[i] = false;
   }
 
-  for (i = 2; (i * i) < num; i++)
-  {
-    if (!array[i])
-    {
-      for (j = 2; j <= num / i; j++)
-      {
+  for (i = 2; (i * i) < num; i++) {
+    if (!array[i]) {
+      for (j = 2; j <= num / i; j++) {
         array[(i * j)] = true;
       }
     }
@@ -63,7 +57,21 @@ void primes(int num)
   }
 }
 
-int gcd(int a, int b)
-{
+int gcd(int a, int b) {
   return b == 0 ? a : gcd(b, a % b);
+}
+
+int fibonacci(int no) {
+  if(no==0)
+    return 0;
+  else if(no==1)
+    return 1;
+  return fibonacci(no - 1) + fibonacci(no - 2);
+}
+
+int main(void) {
+  for (int i = 0; i < 10;i++) {
+    cout << " "<<fibonacci(i);
+  }
+  return 0;
 }

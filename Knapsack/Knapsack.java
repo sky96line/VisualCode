@@ -1,6 +1,4 @@
-package demo;
-        
-public class Greedy {
+public class Knapsack {
   static final int ITEM = 3;
   static float[] price = new float[ITEM];
   static float[] weight = new float[ITEM];
@@ -43,7 +41,7 @@ public class Greedy {
   {
     int index;
     float get=0;
-    Greedy g = new Greedy();
+    Knapsack g = new Knapsack();
     g.fill();
     g.average();
     
