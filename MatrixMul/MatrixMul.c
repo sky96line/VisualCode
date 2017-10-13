@@ -19,7 +19,6 @@ int matrixMul(int arr[], int i, int j) {
 int MatrixChainOrder(int p[], int n)
 {
   int m[n][n];
-
   int i, j, k, L, q;
 
   for (i = 1; i < n; i++)
