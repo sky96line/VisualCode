@@ -1,4 +1,14 @@
+import sys
+
+print(sys.argv[1])
+
 '''
+import os
+
+cur = os.getcwd()
+curr = os.getpid()
+print(curr)
+
 import matplotlib.pyplot as plt
 
 from sklearn import datasets
@@ -8,20 +18,24 @@ digits = datasets.load_digits()
 
 clf = svm.SVC(gamma=0.00001, C=100)
 
-x, y = digits.data[:-10], digits.target[:-10]
+x, y = digits.data[:1787], digits.target[:1787]
+print(len(x))
+
+x_, y_ = digits.data[1788:], digits.target[1788:]
 
 clf.fit(x,y)
 
-p = clf.predict([digits.data[-2]])
+p = clf.predict([digits.data[1796]])
+print(p)
 
-plt.imshow(digits.images[-2], cmap=plt.cm.gray_r)
+plt.plot(digits.data[:1787],'g')
+plt.plot(digits.data[1788:], 'b')
 plt.show()
 
 ==================================================
 
 import numpy as np
-from s
-klearn.datasets import load_iris
+from sklearn.datasets import load_iris
 
 iris = load_iris()
 
@@ -40,9 +54,8 @@ pred = clf.predict(x_test)
 
 from sklearn.metrics import accuracy_score
 print(accuracy_score(y_test, pred))
-'''
 
-'''
+
 from  sklearn import tree
 
 features = [[140, 1],[130, 1],[150, 0],[170, 0]]

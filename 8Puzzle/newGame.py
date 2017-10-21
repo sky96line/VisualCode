@@ -42,8 +42,7 @@ def getIndex(state, elemant):
 def swap(state, i, j, direction):
   temp = state[i][j]
   if direction is 'd' and i is not 0:
-    state[i][j] = state[i-1][j]
-    state[i-1][j] = temp
+    state[i][j], state[i-1][j] = state[i-1][j], state[i][j]
 
   elif direction is 'u' and i is not 2:
     state[i][j] = state[i+1][j]
@@ -71,15 +70,16 @@ def getHScore(state):
       elemant = state[i][j]
       if elemant is not 0:
        a, b = getIndex(goal,elemant)
-       HScore = HScore + abs(i-a) + abs(j-b)
+       HScore += abs(i-a) + abs(j-b)
   return HScore
 
 def getGScore(state, prevG):
   GScore = 0
   for i in range(3):
     for j in range(3):
-      if goal[i][j] is not state[i][j]:
-        GScore += 1
+      if state[i][j] is not 0:
+        if goal[i][j] is not state[i][j]:
+          GScore += 1
   return prevG + GScore
 
 def getFScore(state, prevF):
