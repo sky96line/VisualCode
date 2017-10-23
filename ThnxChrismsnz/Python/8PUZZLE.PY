@@ -1,44 +1,4 @@
-#!/usr/bin/python
-#
-### Student Info
-# Smith, Christopher, 02386569, 159.302
-# Assignment 1: 8 Puzzle.
-#
-### Language
-# This assignment was written in Python. An open source, interpreted language
-# with a mix of imperative, OO and functional programming. Syntax is simple
-# and easy to learn.
-#
-# Developed on Ubuntu Linux but this will run on the interpreter available
-# from http://python.org. Documentation is also on that site but a good
-# tutorial is available for free at http://diveintopython.org.
-#
-### Data Structures
-#
-# The state of the board is stored in a list. The list stores values for the
-# board in the following positions:
-#
-# -------------
-# | 0 | 3 | 6 |
-# -------------
-# | 1 | 4 | 7 |
-# -------------
-# | 2 | 5 | 8 |
-# -------------
-#
-# The goal is defined as:
-#
-# -------------
-# | 1 | 2 | 3 |
-# -------------
-# | 8 | 0 | 4 |
-# -------------
-# | 7 | 6 | 5 |
-# -------------
-#
-# Where 0 denotes the blank tile or space.
 goal_state = [1, 8, 7, 2, 0, 6, 3, 4, 5]
-#
 # The code will read state from a file called "state.txt" where the format is
 # as above but space seperated. i.e. the content for the goal state would be
 # 1 8 7 2 0 6 3 4 5
@@ -263,7 +223,7 @@ def readfile( filename ):
 def main():
 	starting_state = readfile( "state.txt" )
 	### CHANGE THIS FUNCTION TO USE bfs, dfs, ids or a_star
-	result = ids( starting_state, goal_state )
+	result = bfs( starting_state, goal_state )
 	if result == None:
 		print "No solution found"
 	elif result == [None]:
