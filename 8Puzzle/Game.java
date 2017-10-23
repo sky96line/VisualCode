@@ -1,5 +1,3 @@
-package demo;
-
 class Node
 {
   int[][] bord = new int[3][3];
@@ -255,7 +253,6 @@ class Game
   static Node n;
   public static int[] chk = new int[100];
   public static int in = 0;
-
   public static void main(String args[])
   {
     int[][] arr = new int[][] {{1,2,3},{4,8,0},{7,6,5}};
@@ -266,7 +263,7 @@ class Game
     {
       try{Thread.sleep(1000);}
       catch(Exception e){}
-      
+
       n.moveUp();
       n.moveDown();
       n.moveLeft();

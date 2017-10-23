@@ -1,5 +1,6 @@
 from __future__ import print_function
 import math
+import time
 
 start = [[2,8,3], 
          [1,6,4], 
@@ -88,6 +89,7 @@ def getFScore(state, prevF):
 def minn(listCost, up, down, left, right):
   min = 100000
   for i in listCost:
+    print(i, end=" ")
     if i < min:
       min = i
 
@@ -123,9 +125,8 @@ while start is not goal:
   s = minn(listCost, up, down, left, right)
   #print(s, end=" ")
   move(start, s)
+  display(start)
   close.append([])
   close[i].append(start)
-  print()
-  close.append(start)
-
+  time.sleep(3)
 

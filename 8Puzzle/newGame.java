@@ -1,106 +1,173 @@
-
+import java.util.*;
 class newGame
 {
-  public static int[][] start = new int[][] {{2,8,3},{1,6,4},{0,7,5}};
-  public static int[][] goal = new int[][] {{1,2,3},{8,0,4},{7,6,5}};
-  public static int[][] currentUp = new int[][] { { 2, 8, 3 }, { 1, 6, 4 }, { 0, 7, 5 } };
-  public static int[][] currentDown = new int[][] { { 2, 8, 3 }, { 1, 6, 4 }, { 0, 7, 5 } };
-  public static int[][] currentLeft = new int[][] { { 2, 8, 3 }, { 1, 6, 4 }, { 0, 7, 5 } };
-  public static int[][] currentRight = new int[][] { { 2, 8, 3 }, { 1, 6, 4 }, { 0, 7, 5 } };
+  public static int[][] start = new int[][] {
+    {1,2,3}, 
+    {4,0,6}, 
+    {7,8,5}};
   
-  static void display(int[][] state)
-  {
-    for(int i=0; i<3; i++) {
-      for(int j=0; j<3; j++) {
-        System.out.print(" "+state[i][j]);
+  public static int[][] goal = new int[][] {
+    {1,2,3}, 
+    {4,5,6}, 
+    {7,0,8}};
+
+  public static int[][][] closeSet = new int[100][3][3];
+  public static Scanner sc = new Scanner(System.in);
+
+  static void display(int[][][] arr) {
+    System.out.println();
+    for (int k = 0; k < 100; k++) {
+      for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < 3; j++) {
+          System.out.print(" " + arr[k][i][j]);
+        }
+        System.out.println();
+      }
+    }
+  }
+
+  static void display(int[][] arr) {
+    System.out.println();
+    for(int i=0; i<3; i++)
+    {
+      for(int j=0; j<3; j++)
+      {
+  
+          System.out.print(" "+arr[i][j]);
       }
       System.out.println();
     }
   }
 
-  static int[] getIndex(int[][] state, int elemant) {
-    int[] index = new int[] {0,0};
-    for(int i=0; i<3; i++) {
-      for(int j=0; j<3; j++) {
-        if(state[i][j] == elemant) {
-          index = new int[] {i,j};
-          return index;
+  static int[] getIndex(int[][] arrGoal, int find) {
+    int[] indexes = new int[2];
+
+    for (int i = 0; i < 3; i++) 
+    {
+      for (int j = 0; j < 3; j++) 
+      {
+        if(arrGoal[i][j] == find)
+        {
+          indexes[0] = i;
+          indexes[1] = j;
+          return indexes;
         }
       }
     }
-    return index;
+    return indexes;
   }
 
-  static int[][] swap(int[][] state, int i, int j, char direction) {
-    int temp = state[i][j];
-    if(direction == 'd' && i!=0) {
-      state[i][j] = state[i-1][j];
-      state[i-1][j] = temp;
-    }
-    else if(direction == 'u' && i!=2) {
-      state[i][j] = state[i+1][j];
-      state[i+1][j] = temp;
-    }
-    else if(direction == 'r' && j!=0) {
-      state[i][j] = state[i][j-1];
-      state[i][j-1] = temp;
-    }
-    else if(direction == 'l' && j!=2) {
-      state[i][j] = state[i][j+1];
-      state[i][j+1] = temp;
-    }
-    return state;
-  }
+  static int getHScore(int[][] arr) {
+    int hScore = 0;
 
-  static void move(int[][] statee, char direction) {
-    int[][] state = statee;
-    int[] index = getIndex(state, 0);
-    state = swap(state, index[0], index[1], direction);
-    //display(state);
-    //System.out.println(getFScore(state,0));
-  }
-
-  static int getHScore(int[][] state) {
-    int elemant,HScore = 0;
-    int[] index;
-    for(int i=0; i<3; i++) {
-      for(int j=0; j<3; j++) {
-        elemant = state[i][j];
-        if(elemant != 0) {
-          index = getIndex(goal,elemant);
-          HScore += Math.abs(i-index[0]) + Math.abs(j-index[1]);
+    for (int i = 0; i < 3; i++) 
+    {
+      for (int j = 0; j < 3; j++) 
+      {
+        if(arr[i][j]!=0)
+        {
+          int[] index = getIndex(goal,arr[i][j]);
+        
+          hScore += Math.abs(i- index[0]) + Math.abs(j- index[1]);
         }
       }
     }
-    return HScore;
+    return hScore;
   }
 
-  static int getGScore(int[][] state,int prevG) {
-    int GScore = 0;
-    for(int i=0; i<3; i++) {
-      for(int j=0; j<3; j++) {
-        if(goal[i][j] != state[i][j])
-          GScore += 1;
+  static int getGScore(int[][] arr) {
+    int gScore = 0;
+
+    for(int i=0; i<3; i++)
+    {
+      for(int j=0; j<3; j++)
+      {
+        if(arr[i][j] != goal[i][j] && arr[i][j] != 0)
+        {
+          gScore++;
+        }
       }
     }
-    return prevG + GScore;
+    return gScore;
   }
-  
-  static int getFScore(int[][] state, int prevF) {
-    return getHScore(state) + getGScore(state, prevF);
+
+  static int finalScore(int[][] arr) {
+    return getGScore(arr) + getHScore(arr);
+  }
+
+  static int[][] move(int[][] arr, char direction) {
+    int[][] newState = arr;
+    int[] index = getIndex(arr, 0);
+    int temp = 0;
+
+    if(direction == 'u' && index[0] != 2)
+    {
+      newState[index[0]][index[1]] = newState[index[0]+1][index[1]];
+      newState[index[0]+1][index[1]] = 0;
+    }
+    if(direction == 'd' && index[0] != 0)
+    {
+      newState[index[0]][index[1]] = newState[index[0]-1][index[1]];
+      newState[index[0]-1][index[1]] = 0;
+    }
+    if (direction == 'l' && index[1] != 2) 
+    {
+      newState[index[0]][index[1]] = newState[index[0]][index[1] + 1];
+      newState[index[0]][index[1] + 1] = 0;
+    }
+    if(direction == 'r' && index[1] != 0)
+    {
+      newState[index[0]][index[1]] = newState[index[0]][index[1] - 1];
+      newState[index[0]][index[1] - 1] = 0;
+    }
+
+    return newState;
+  }
+
+  static boolean isVisited(int[][] arr)
+  {
+    for(int k=0; k<100; k++)
+    {
+      int c = 0;
+      for(int i=0; i<3; i++)
+      {
+        for(int j=0; j<3; j++)
+        {
+          if(closeSet[k][i][j] == arr[i][j])
+            c++;
+        }
+      }
+      if(c==9)
+      {
+        return true;
+      }  
+    }
+    return false;
   }
 
   public static void main(String args[])
   {
-    close
-    while(start == goal)
-    {
-      int up = 10000, down = 10000, left = 10000, right = 10000;
-      move(currentUp,'u');
-      move(currentDown,'d');
-      move(currentLeft,'l');
-      move(currentRight,'r');
-
-    }
+    
+    int[][] state = start;
+    int[][] stateUp = start;
+    int[][] stateDown = start;
+    int[][] stateLeft = start;
+    int[][] stateRight = start;
+    
+    display(state);
+    stateUp = move(stateUp, 'u');
+    display(stateUp);
+    stateDown = move(stateDown, 'd');
+    display(stateDown);
+    stateLeft = move(stateLeft, 'l');
+    display(stateLeft);
+    stateRight = move(stateRight, 'r');
+      
+    
+    
+    
+    
+    display(stateRight);
+    
   }
 }
