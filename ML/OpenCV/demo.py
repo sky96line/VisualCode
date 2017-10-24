@@ -1,8 +1,7 @@
 import cv2
 import numpy as np
 
-'''
-cap = cv2.VideoCapture('http://192.168.43.56:8080/viewers.html#webcamxp')
+cap = cv2.VideoCapture('poc')
 
 while True:
   ret, frame = cap.read()
@@ -14,8 +13,9 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 '''
-img = cv2.imread('pp.jpg',0)
+img = cv2.imread('pp.jpg')
 
 cv2.imshow('Image', img)
 cv2.waitKey(0)
 cv2.destroyAllWindows()
+'''
