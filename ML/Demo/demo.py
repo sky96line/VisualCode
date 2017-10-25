@@ -1,14 +1,3 @@
-import sys
-
-print(sys.argv[1])
-
-'''
-import os
-
-cur = os.getcwd()
-curr = os.getpid()
-print(curr)
-
 import matplotlib.pyplot as plt
 
 from sklearn import datasets
@@ -32,6 +21,7 @@ plt.plot(digits.data[:1787],'g')
 plt.plot(digits.data[1788:], 'b')
 plt.show()
 
+'''
 ==================================================
 
 import numpy as np
