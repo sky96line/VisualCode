@@ -62,16 +62,24 @@ int gcd(int a, int b) {
 }
 
 int fibonacci(int no) {
-  if(no==0)
-    return 0;
-  else if(no==1)
-    return 1;
-  return fibonacci(no - 1) + fibonacci(no - 2);
+  if(no==0 || no==1)
+    return no;
+  return fibonacci(no - 2) + fibonacci(no - 1);
+}
+
+int maximum(int x, int y) {
+  if(y-x < 1)
+    return x > y ? x : y;
+  int max1 = maximum(x, (x + y) / 2);
+  int max2 = maximum((x + y) / 2 + 1, y);
+  return maximum(max1, max2);
 }
 
 int main(void) {
-  for (int i = 0; i < 10;i++) {
-    cout << " "<<fibonacci(i);
+  for (int i = 0; i < 10; i++)
+  {
+    int ans = fibonacci(i);
+    cout << " " << ans;
   }
   return 0;
 }

@@ -1,7 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <math.h>
-#define base 100
+#define base 10
 
 using namespace std;
 
