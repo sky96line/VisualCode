@@ -2,10 +2,23 @@ import httplib
 import urllib
 import base64
 
-# key2 = 5415e4b8d36348058a0fdfaf04ec642a
+
+def readKeys():
+    f = open('../Keys').read()
+    keys = f.split('\n')
+
+    key = []
+    for i in keys:
+        res = i.split(',')
+        for j in res:
+            key.append(j)
+    return key
+
+subscription_key = readKeys()
+
 headers = {
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': '47fec90429eb444990bc3865c75071e3',
+    'Ocp-Apim-Subscription-Key': subscription_key[2],
 }
 
 params = urllib.urlencode({

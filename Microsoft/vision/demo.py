@@ -3,14 +3,25 @@ import urllib
 import base64
 import json
 
-#subscription_key = 'ca335d9bd2a44842b055666ef1f63750' key2
-subscription_key = '3aba9a66fe16491ea90615b199b0e68d'
+
+def readKeys():
+    f = open('../Keys').read()
+    keys = f.split('\n')
+
+    key = []
+    for i in keys:
+        res = i.split(',')
+        for j in res:
+            key.append(j)
+    return key
+
+subscription_key = readKeys()
 
 uri_base = 'westcentralus.api.cognitive.microsoft.com'
 
 headers = {
     'Content-Type': 'application/json',
-    'Ocp-Apim-Subscription-Key': subscription_key,
+    'Ocp-Apim-Subscription-Key': subscription_key[4],
 }
 
 params = urllib.urlencode({
