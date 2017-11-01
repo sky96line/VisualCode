@@ -53,7 +53,7 @@ class newKruskal
     {
       for(int j=i+1; j<size; j++)
       {
-        System.out.println(i+" to "+j+" : ");
+        System.out.println((i+1)+" to "+(j+1)+" : ");
         dist = sc.nextInt();
         if(dist>0)
         {

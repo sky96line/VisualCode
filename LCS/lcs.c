@@ -1,5 +1,19 @@
 #include <stdio.h>
-#
+
+int max(int a, int b) {
+  return a > b ? a : b;
+}
+
+void disp(int *arr, int m, int n)  {
+  int i, j;
+  for (i = 0; i <= m; i++) {
+    for (j = 0; j <= n; j++)  {
+      printf("%d ", *((arr+i*n) + j));
+    }
+    printf("\n");
+  }
+}
+
 int lcs(char *X, char *Y, int m, int n)
 {
   int L[m + 1][n + 1];
@@ -19,16 +33,13 @@ int lcs(char *X, char *Y, int m, int n)
         L[i][j] = max(L[i - 1][j], L[i][j - 1]);
     }
   }
-
-  return L[m][n];
+  //disp((int *)L, m, n);
+  return L[m][n]-1;
 }
 
-int max(int a, int b) {
-  return a > b ? a : b;
-}
 int main(void) {
-  char x[] = "akash";
-  char y[] = "aksdfjkh";
+  char x[] = "acc";
+  char y[] = "acc";
   int m = sizeof(x) / sizeof(x[1]);
   int n = sizeof(y) / sizeof(y[1]);
 

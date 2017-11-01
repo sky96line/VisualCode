@@ -3,6 +3,14 @@
 
 using namespace std;
 
+void swapChar(char *a, char *b) {
+  char temp;
+  temp = *a;
+  *a = *b;
+  *b = temp;
+}
+
+//Recursion
 int pow(int x, int n) {
   if (n == 0)
     return 1;
@@ -11,6 +19,7 @@ int pow(int x, int n) {
   else return x * y * y;
 }
 
+//D&C
 float SqrRoot(float no) {
   float left, right, mid;
   left = 0;
@@ -57,29 +66,49 @@ void primes(int num) {
   }
 }
 
+//Recursion
 int gcd(int a, int b) {
   return b == 0 ? a : gcd(b, a % b);
 }
 
+//Recursion
 int fibonacci(int no) {
   if(no==0 || no==1)
     return no;
   return fibonacci(no - 2) + fibonacci(no - 1);
 }
 
-int maximum(int x, int y) {
-  if(y-x < 1)
-    return x > y ? x : y;
-  int max1 = maximum(x, (x + y) / 2);
-  int max2 = maximum((x + y) / 2 + 1, y);
-  return maximum(max1, max2);
+void grayCodeHelper(int bytes, string pre)  {
+  if(bytes==0)
+    cout << pre << endl;
+  else  {
+    grayCodeHelper(bytes - 1, pre + "0");
+    grayCodeHelper(bytes - 1, pre + "1");
+  }
 }
 
-int main(void) {
-  for (int i = 0; i < 10; i++)
-  {
-    int ans = fibonacci(i);
-    cout << " " << ans;
+//Recursion
+void grayCode(int bytes)  {
+  grayCodeHelper(bytes, "");
+}
+
+//Back-Tracking
+void permute(char* str, int l, int r) {
+  int i;
+  if (l == r)
+    cout << str << endl;
+  else  {
+    for (i = l; i <= r; i++) {
+      swapChar((str + l), (str + i));
+      permute(str, l + 1, r);
+      swapChar((str + l), (str + i));
+    }
   }
+}
+
+int main(void)
+{
+  char a[] = "abcd";
+  permute(a, 0, 3);
   return 0;
 }
