@@ -93,6 +93,11 @@ void grayCode(int bytes)  {
 }
 
 //Back-Tracking
+/*main
+  char a[] = "abcd";
+  permute(a, 0, 3);
+  return 0;
+*/
 void permute(char* str, int l, int r) {
   int i;
   if (l == r)
@@ -106,9 +111,15 @@ void permute(char* str, int l, int r) {
   }
 }
 
+//Newton algorithm
+int NewtonRoot(int num, int oldAp = 50) {
+  int newAp = (oldAp + num/oldAp)/2;
+  //cout<<newAp<<endl;
+  if((oldAp-newAp) < 0.0001)
+    return newAp;
+  NewtonRoot(num,newAp);
+}
+
 int main(void)
 {
-  char a[] = "abcd";
-  permute(a, 0, 3);
-  return 0;
 }
