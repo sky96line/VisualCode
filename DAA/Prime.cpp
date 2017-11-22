@@ -12,8 +12,8 @@ void swapChar(char *a, char *b) {
 
 //Recursion
 int pow(int x, int n) {
-  if (n == 0)
-    return 1;
+  if (n == 1)
+    return x;
   int y = pow(x, n / 2);
   if (n % 2 == 0) return y * y;
   else return x * y * y;
@@ -120,6 +120,16 @@ int NewtonRoot(int num, int oldAp = 50) {
   NewtonRoot(num,newAp);
 }
 
+int SmallDiv(int num) {
+  for(int i=2; i*i<=num; i++) {
+    cout<<i<<" ";
+    if(num%i == 0)
+      return i;
+  }
+  return 1;
+}
+
 int main(void)
 {
+  cout<<pow(3,2);
 }

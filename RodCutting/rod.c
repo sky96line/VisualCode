@@ -3,7 +3,7 @@
 void display(int table[], int target)
 {
   int i = 0;
-  for (i = 0; i < target;i++)
+  for (i = 0; i <= target;i++)
     printf(" %d", table[i]);
 }
 
