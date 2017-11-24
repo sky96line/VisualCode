@@ -14,7 +14,7 @@ int MinRod(int target, int len[], int profit[])
   int table[target + 1];
   for (i = 0; i <= target; i++)
   {
-    table[i] = i;
+    table[i] = 0;
   }
   for (i = 1; i <= target;i++)
   {
@@ -35,8 +35,8 @@ int MinRod(int target, int len[], int profit[])
 
 int main(void)
 {
-  int len[] = {1, 2, 4};
-  int profit[] = {1, 5, 8};
+  int len[] = {1, 2, 3, 4};
+  int profit[] = {2, 5, 9, 6};
   int target = 5;
   int result = MinRod(target, len, profit);
   printf("%d", result);
