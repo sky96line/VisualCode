@@ -24,7 +24,7 @@ def move_up(state):
 	else:
 		return None
 
-
+		
 def move_down(state):
 	new_state = state[:]
 	index = new_state.index(0)

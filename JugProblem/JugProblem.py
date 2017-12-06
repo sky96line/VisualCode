@@ -26,25 +26,23 @@ class demo:
         demo.y = 0
         print(demo.x, demo.y)
 
-
-a = demo(4, 3)
+a = demo(3,1)
 
 while True:
+
     if demo.x == goal or demo.y == goal:
         break
+    
+    if demo.x == 0:
+        a.fill()
+
+    if demo.x == goal or demo.y == goal:
+        break
+    
     a.por()
 
     if demo.x == goal or demo.y == goal:
         break
-    if demo.x == 0:
-        a.fill()
 
     if demo.y == y_max:
-        if demo.x == goal or demo.y == goal:
-            break
         a.drop()
-
-    if demo.x != x_max:
-        if demo.x == goal or demo.y == goal:
-            break
-        a.por()
