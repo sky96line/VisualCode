@@ -1,5 +1,4 @@
 import cv2
-import cv2.cv as cv
 import numpy as np
 
 face_case = cv2.CascadeClassifier('objectDitection/face.xml')
@@ -17,6 +16,8 @@ cap.release()
 cv2.destroyAllWindows()
 '''
 img = cv2.imread('pp.jpg')
+rec = cv2.createEigenFaceRecognizer(15,3000)
+
 faces = face_case.detectMultiScale(img, 1.1, 3)#(img, 1.7, 5) for g.jpg
 
 i=34
