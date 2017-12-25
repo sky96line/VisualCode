@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+import os
+
 
 face_case = cv2.CascadeClassifier('objectDitection/face.xml')
 '''
@@ -16,15 +18,16 @@ cap.release()
 cv2.destroyAllWindows()
 '''
 img = cv2.imread('pp.jpg')
-rec = cv2.createEigenFaceRecognizer(15,3000)
 
 faces = face_case.detectMultiScale(img, 1.1, 3)#(img, 1.7, 5) for g.jpg
 
-i=34
+onlyfiles = next(os.walk('Faces/'))[2]  # dir is your directory path as string
+i = len(onlyfiles)
+
 for x, y, w, h in faces:
   region = img[y:y+h,x:x+w]
-  new_img = cv2.imwrite("face-"+str(i)+".jpg",region)
-  #cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+  new_img = cv2.imwrite("Faces//face-"+str(i)+".jpg",region)
+  cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
   i+=1
 
 imS = cv2.resize(img, (960, 540))
