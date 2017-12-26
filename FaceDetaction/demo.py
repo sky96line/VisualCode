@@ -2,35 +2,29 @@ import cv2
 import numpy as np
 import os
 
+def get_files(root, files_of_type):
+  rv = []
+  for cwd, folders, files in os.walk(root):
+    for fname in files:
+      if os.path.splitext(fname)[1] in files_of_type:
+        rv.append(cwd+'/'+fname)
+  return rv
 
 face_case = cv2.CascadeClassifier('objectDitection/face.xml')
-'''
-cap = cv2.VideoCapture('mm.wmv')
 
-while True:
-  ret, frame = cap.read()
-  cv2.imshow('frame', frame)
+files = get_files('Justin',['.jpg'])
 
-  if(cv2.waitKey(30) >= 0):
-    break
-  
-cap.release()
-cv2.destroyAllWindows()
-'''
-img = cv2.imread('pp.jpg')
+i = int(get_last_file('Faces', ['.jpg']).split('-')[1].split('.')[0]) + 1
+j = 1
+for file in files:
+  img = cv2.imread(file,0)
+  faces = face_case.detectMultiScale(img, 1.3, 3)
 
-faces = face_case.detectMultiScale(img, 1.1, 3)#(img, 1.7, 5) for g.jpg
-
-onlyfiles = next(os.walk('Faces/'))[2]  # dir is your directory path as string
-i = len(onlyfiles)
-
-for x, y, w, h in faces:
-  region = img[y:y+h,x:x+w]
-  new_img = cv2.imwrite("Faces//face-"+str(i)+".jpg",region)
-  cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-  i+=1
-
-imS = cv2.resize(img, (960, 540))
-cv2.imshow('Image', imS)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+  for x, y, w, h in faces:
+    region = img[y:y + h, x:x + w]
+    new_img = cv2.imwrite("Faces//face-" + str(i) + "." + str(j) + ".jpg", region)
+    j+=1
+  #imS = cv2.resize(img, (960, 540))
+  #cv2.imshow('Image', img)
+  #cv2.waitKey(1)
+  #cv2.destroyWindow('Image')
