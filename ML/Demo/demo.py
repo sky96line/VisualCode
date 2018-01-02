@@ -1,17 +1,27 @@
 import matplotlib.pyplot as plt
-
+import numpy as np
 from sklearn import datasets
-from sklearn import svm
+from sklearn.metrics import classification_report
+from sklearn.neural_network import MLPClassifier
+from sklearn.preprocessing import StandardScaler
 
 digits = datasets.load_digits()
 
-clf = svm.SVC(gamma=0.00001, C=100)
+x, y = digits.data, digits.target
 
-x, y = digits.data[:1787], digits.target[:1787]
-print(len(x))
+x_, y_ = digits.data[8], digits.target[8]
 
-x_, y_ = digits.data[1788:], digits.target[1788:]
+clf = MLPClassifier(solver='lbfgs', alpha=1e-5,
+                    hidden_layer_sizes=(10, 15), random_state=1)
 
+clf.fit(x,y)
+
+p = clf.predict([x_])
+print p
+
+print(classification_report(y_,[p]))
+
+'''
 clf.fit(x,y)
 
 p = clf.predict([digits.data[1796]])
@@ -20,6 +30,9 @@ print(p)
 plt.plot(digits.data[:1787],'g')
 plt.plot(digits.data[1788:], 'b')
 plt.show()
+'''
+
+
 
 '''
 ==================================================
@@ -41,6 +54,7 @@ clf = KNeighborsClassifier()
 clf = clf.fit(x_train, y_train)
 
 pred = clf.predict(x_test)
+
 
 from sklearn.metrics import accuracy_score
 print(accuracy_score(y_test, pred))

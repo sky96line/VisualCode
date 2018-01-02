@@ -1,34 +1,37 @@
-import cv2
-import numpy as np
 import os
+import cv2 as cv
+import numpy as np
 
-def get_last_file(root, files_of_type):
-  rv = None
-  for cwd, folders, files in os.walk(root):
-    for fname in files:
-      if os.path.splitext(fname)[1] in files_of_type:
-        rv=fname
-  return rv
+face_detector = cv.CascadeClassifier('ObjectDetector/face.xml')
+eye_detector = cv.CascadeClassifier('ObjectDetector/eye.xml')
 
-#i = int(get_last_file('Faces', ['.jpg']).split('-')[1].split('.')[0]) + 1
-i = 1
-j = 1
+name = str(raw_input('Enter name : '))
+cap = cv.VideoCapture('Media/Akash.mp4')
 
-img = cv2.imread('Justin/29-FaceId-0.jpg')
-#img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-face_case = cv2.CascadeClassifier('objectDitection/face.xml')
-faces = face_case.detectMultiScale(img,1.7,5) # (img, 1.7, 5) for g.jpg; (1.1,3 for gg.jpg)
+f = open('Data.txt', 'r')
+num = f.read()
+if(num):
+  num = num.split('\n')
+  num = num[-2]
+  i = int(num.split(',')[0]) + 1
+else:
+  i=0
+f.close()
+j = 0
 
-eye_case = cv2.CascadeClassifier('objectDitection/eye.xml')
-eyes = eye_case.detectMultiScale(img,1.7,5)
+while(j<100):
+  ret, img = cap.read()
+  img = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
 
-for x, y, w, h in faces:
-  region = img[y:y+h,x:x+w]
-  cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
-  #new_img = cv2.imwrite("Faces//face-" + str(i) + "." + str(j) + ".jpg", region)
-  break
+  face = face_detector.detectMultiScale(img,1.3,5)
 
-imS = cv2.resize(img, (960, 540))
-cv2.imshow('Image', imS)
-cv2.waitKey(0)
-cv2.destroyAllWindows()
+  for x, y, w, h in face:
+    cv.rectangle(img, (x,y), (x+w, y+h), (255,255,255), 3)
+    face_img = cv.resize(img[y : y+h, x : x+w],(100,100))
+    cv.imwrite('Faces/user-' + str(i) + '.' + str(j) + '.jpg',face_img)
+    j += 1
+
+f = open('Data.txt','a')
+f.write(str(i)+','+name)
+f.write('\n')
+f.close()

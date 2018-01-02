@@ -1,35 +1,40 @@
 import os
 import numpy as np
-import cv2
-import time
-from PIL import Image
+import cv2 as cv
+from sklearn.neural_network import MLPClassifier
 
-ID = int(raw_input('Enter ID : '))
-def get_files(root, files_of_type):
-  rv = []
+clf = MLPClassifier(solver='lbfgs', alpha=1e-5,hidden_layer_sizes=(150, 100, 50, 25), random_state=1)
+
+def get_faces(root, file_types):
+  photos = []
   for cwd, folders, files in os.walk(root):
-    for fname in files:
-      if os.path.splitext(fname)[1] in files_of_type:
-        rv.append(cwd+'/'+fname)
-  return rv
+    for file in files:
+      if(file.split('.')[-1] in file_types):
+        photos.append(cwd + '/' + file)
+  return photos
 
-eigenRecog = cv2.createEigenFaceRecognizer(15)
+photos = get_faces('Faces',['jpg'])
 
-files = get_files('Faces', ['.jpg'])
-
-faceList = []
+FaceList = []
 IDs = []
-for file in files:
-  img = Image.open(file).convert('L')
-  img = img.resize((110, 110))
-  img = np.array(img)
-  #cv2.imshow('ID : '+str(ID)+'-Face',img)
-  imgNP = np.array(img,'uint8')
-  
-  faceList.append(imgNP)
+for photo in photos:
+  img = cv.imread(photo,0)
+  img = cv.adaptiveThreshold(img, 255, cv.ADAPTIVE_THRESH_GAUSSIAN_C, cv.THRESH_BINARY, 115, 1)
+  img = np.asarray(img)
+  FaceList.append(img)
+  ID = int(photo.split('-')[1].split('.')[0])
   IDs.append(ID)
 
-IDNP = np.array(IDs)
+IDs = np.asarray(IDs)
+FaceList = np.asarray(FaceList)
 
-eigenRecog.train(faceList,IDNP)
-eigenRecog.save('Recog/EigenFaceRecognizer.xml')
+n, w, h = FaceList.shape
+FaceList = FaceList.reshape(n,(w*h))
+
+print('Training Start...!')
+clf.fit(FaceList,IDs)
+print('Done...!')
+
+import pickle
+with open('Classifier/clf.pkl', 'wb') as f:
+    pickle.dump(clf, f)
